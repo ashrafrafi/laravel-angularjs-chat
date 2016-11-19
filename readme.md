@@ -2,7 +2,7 @@
 A basic chat app on [Laravel](https://laravel.com) and [AngularJS](https://angularjs.org) using polling, long-polling and push techniques.
 
 ## Features
-* Sends and receives chats messages using **polling**, **long-polling** and **push** techniques.
+* Sends and receives messages to and from other users using **polling**, **long-polling** and **push** techniques.
 * Powered by [Laravel](https://laravel.com) and [AngularJS](https://angularjs.org) for server-side and client-side processing.
 
 ## Why?
