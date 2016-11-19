@@ -38,12 +38,4 @@ class Conversation extends Model
     {
     	return $this->hasMany('App\Message');
     }
-
-    /**
-     * Scope conversations with specified user.
-     */
-    public function withUser($query, $user_id)
-    {
-        return $query->where('respondent_id', $user_id);
-    }
 }
