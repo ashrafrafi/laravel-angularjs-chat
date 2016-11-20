@@ -19,5 +19,8 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index');
 
+Route::get('users/me', 'UsersController@me');
+Route::resource('/users', 'UsersController');
+
 Route::resource('/conversations', 'ConversationsController');
 Route::resource('/conversations/{conversation_id}/messages', 'MessagesController');

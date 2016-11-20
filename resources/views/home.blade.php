@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div ng-controller="ConversationsController as ctrl" ng-init="ctrl.getConversations()">
+<div ng-controller="ConversationsController as ctrl" ng-init="ctrl.index()">
 
     <div class="container">
         <div class="row">

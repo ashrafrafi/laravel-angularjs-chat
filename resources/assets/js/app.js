@@ -15,6 +15,16 @@
 		/**
 		 * Resources
 		 */
+		var User = $resource(
+				'/users/:user_id',
+				{user_id: '@user_id'},
+				{
+					'me': {
+				      url: '/users/me',
+				      method: 'GET'
+				    }
+				}
+			);
 		var Conversation = $resource('/conversations/:conversation_id', {conversation_id: '@conversation_id'});
 		var Message = $resource('/conversations/:conversation_id/messages', {conversation_id: '@conversation_id', message_id: '@message_id'});
 
@@ -24,9 +34,34 @@
 		var vm = this;
 		vm.message = 'hello world!';
 		
-		vm.conversations = null
-		vm.conversation = null
-		vm.messages = null
+		vm.users = null;
+		vm.user = null;
+		vm.me = null; // The currently authenticated user.
+
+		vm.conversations = null;
+		vm.conversation = null;
+		vm.messages = null;
+
+		vm.index = function(){
+			vm.getConversations();
+
+			vm.getMe();
+		}
+
+		vm.getMe = function(){
+			User.me(
+				{},
+				function(response){
+					vm.me = response;
+
+					console.log('Got me:');
+					console.log(vm.me);
+				},
+				function(error){
+					console.log('Could not load authenticated user.');
+				}
+			);
+		}
 
 		vm.getConversations = function(){
 			console.log('Getting conversations...');
@@ -49,7 +84,7 @@
 				function(error){
 					console.log(error)
 				}
-			)
+			);
 		}
 
 		vm.getMessages = function(conversation){
@@ -68,7 +103,7 @@
 				function(error){
 					console.log(error);
 				}
-			)
+			);
 		}
 	}
 
