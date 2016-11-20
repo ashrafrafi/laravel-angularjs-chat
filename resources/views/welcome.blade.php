@@ -62,6 +62,21 @@
             .m-b-md {
                 margin-bottom: 30px;
             }
+
+            .link-unstyled {
+              color: inherit;
+              text-decoration: inherit;
+            }
+
+            .link-unstyled:link {
+              color: inherit;
+              text-decoration: inherit;
+            }
+
+            .link-unstyled:hover {
+              color: inherit;
+              text-decoration: inherit;
+            }
         </style>
     </head>
     <body>
@@ -79,15 +94,16 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    Laravel
+                    Laravel AngularJS Chat
                 </div>
-
+                <p>
+                    A sample chat app written in Laravel and AngularJS and by <a href="http://doncadavona.com" class="link-unstyled" target="_blank">Don Cadavona</a>.
+                </p>
+                <br>
                 <div class="links">
-                    <a href="https://laravel.com/docs">Documentation</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
+                    <a href="https://github.com/doncadavona/laravel-angularjs-chat">Github</a>
+                    <a href="https://laravel.com">Laravel</a>
+                    <a href="https://angularjs.org">AngularJS</a>
                 </div>
             </div>
         </div>
