@@ -43,7 +43,7 @@ class MessagesController extends Controller
                     'text' => $request->get('text')
                 ]);
 
-        return $message->with('sender')->first();
+        return $message->with('sender')->orderBy('created_at', 'desc')->first();
     }
 
     /**
