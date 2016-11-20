@@ -8,3 +8,4 @@ Homestead.yaml
 .env
 /.phpintel
 /node_modules
+/public/build
