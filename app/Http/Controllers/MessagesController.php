@@ -25,7 +25,7 @@ class MessagesController extends Controller
      */
     public function create()
     {
-        //
+        // 
     }
 
     /**
@@ -36,7 +36,14 @@ class MessagesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $conversation = Conversation::findOrFail($request->get('conversation_id'));
+
+        $message = $conversation->messages()->create([
+                    'sender_id' => $request->user()->id,
+                    'text' => $request->get('text')
+                ]);
+
+        return $message->with('sender')->first();
     }
 
     /**

@@ -44,12 +44,14 @@
                         </div>
                     </div>
                     <div class="panel-footer">
-                        <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Type message..." autofocus="">
-                            <span class="input-group-btn">
-                                <button class="btn btn-default" type="button">Send</button>
-                            </span>
-                        </div>
+                        <form ng-submit="ctrl.sendMessage(message)">
+                            <div class="input-group">
+                                    <input ng-model="message" type="text" class="form-control" placeholder="Type message..." autofocus="">
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-default" type="button">Send</button>
+                                    </span>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>

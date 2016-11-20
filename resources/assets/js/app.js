@@ -105,6 +105,28 @@
 				}
 			);
 		}
+
+		vm.sendMessage = function(text){
+			
+			console.log('Sending message...');
+
+			Message.save(
+				{
+					conversation_id: vm.conversation.id,
+					text: text
+				},
+				function(response){
+					vm.messages.push(response);
+
+					console.log('Message sent:');
+					console.log(response);
+					console.log(vm.messages);
+				},
+				function(error){
+					console.log(error);
+				}
+			);
+		}
 	}
 
 })();
