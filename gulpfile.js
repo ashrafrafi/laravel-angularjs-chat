@@ -1,7 +1,5 @@
 const elixir = require('laravel-elixir');
 
-require('laravel-elixir-vue-2');
-
 /*
  |--------------------------------------------------------------------------
  | Elixir Asset Management
@@ -14,6 +12,17 @@ require('laravel-elixir-vue-2');
  */
 
 elixir((mix) => {
-    mix.sass('app.scss')
-       .webpack('app.js');
+    mix.sass('app.scss');
+
+    // mix scripts
+    mix.scripts([
+        '../../../node_modules/angular/angular.js',
+        'app.js'
+    ]);
+
+    // version assets for cache busting
+    mix.version([
+        'css/app.css',
+        'js/all.js',
+    ]);
 });
