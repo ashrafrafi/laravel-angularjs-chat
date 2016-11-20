@@ -1,14 +1,29 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">Dashboard</div>
+<div ng-controller="ConversationsController as conversations">
 
-                <div class="panel-body">
-                    You are logged in!
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Conversations</div>
+
+                    <div class="panel-body">
+                        @{{ conversations.conversations }}
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Messages</div>
+
+                    <div class="panel-body">
+                        <p>
+                            @{{ conversations.messages }}
+                        </p>
+                        <p>@{{ conversations.message }}</p>
+                    </div>
                 </div>
             </div>
         </div>

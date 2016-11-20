@@ -16,3 +16,7 @@ use Illuminate\Http\Request;
 Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:api');
+
+Route::get('/conversations', function (Request $request) {
+    return App\Conversation::all();
+})->middleware('auth:api');
