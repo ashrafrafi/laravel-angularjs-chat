@@ -15,18 +15,20 @@
 		/**
 		 * Resources
 		 */
-		var Conversation = $resource('api/conversations/:conversation_id', {conversation_id: '@conversation_id'});
-		var Message = $resource('api/conversations/:conversation_id', {conversation_id: '@conversation_id', message_id: '@message_id'});
+		var Conversation = $resource('/conversations/:conversation_id', {conversation_id: '@conversation_id'});
+		var Message = $resource('/conversations/:conversation_id/messages', {conversation_id: '@conversation_id', message_id: '@message_id'});
 
 		/**
 		 * View Model
 		 */
 		var vm = this;
 		vm.message = 'hello world!';
-		vm.conversations = getConversations();
-		vm.messages = getMessages();
+		
+		vm.conversations = null
+		vm.conversation = null
+		vm.messages = null
 
-		function getConversations(){
+		vm.getConversations = function(){
 			console.log('Getting conversations...');
 
 			Conversation.query(
@@ -34,6 +36,15 @@
 				function(response){
 					console.log('Got conversations:');
 					console.log(response);
+					vm.conversations = response;
+
+					// set first conversation as active
+					vm.conversation = response[0];
+					console.log('Conversation:');
+					console.log(vm.conversation);
+
+					// get messages of the conversation
+					vm.getMessages(vm.conversation);
 				},
 				function(error){
 					console.log(error)
@@ -41,8 +52,23 @@
 			)
 		}
 
-		function getMessages(){
-			return 'Some messages...'
+		vm.getMessages = function(conversation){
+			
+			console.log('Getting conversation messages: ' + conversation);
+
+			vm.conversation = conversation;
+
+			Message.query(
+				{ conversation_id: conversation.id },
+				function(response){
+					console.log('Got messages:');
+					console.log(response);
+					vm.messages = response;
+				},
+				function(error){
+					console.log(error);
+				}
+			)
 		}
 	}
 
