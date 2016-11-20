@@ -15,7 +15,7 @@ class ConversationsController extends Controller
      */
     public function index(Request $request)
     {
-        return $request->user()->conversations();
+        return $request->user()->conversations()->load('initiator', 'respondent');
     }
 
     /**

@@ -10,7 +10,7 @@
                     <div class="panel-heading">Conversations (@{{ ctrl.conversations.length }})</div>
                     <div class="list-group">
                       <a ng-repeat="conversation in ctrl.conversations" ng-click="ctrl.getMessages(conversation)" href="#" class="list-group-item" ng-class="{'active': ctrl.conversation.id == conversation.id}">
-                        <h4 class="list-group-item-heading">Conversation @{{ conversation.id }}</h4>
+                        <h4 class="list-group-item-heading">@{{ conversation.initiator.name }}, @{{ conversation.respondent.name }}</h4>
                         <p class="list-group-item-text">Since: @{{ conversation.created_at }}</p>
                       </a>
                     </div>
