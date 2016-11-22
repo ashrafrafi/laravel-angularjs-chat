@@ -7,11 +7,11 @@
 
 	angular
 		.module('app', ['ngResource'])
-		.controller('ConversationsController', ConversationsController);
+		.controller('AppController', AppController);
 
-	ConversationsController.$inject = ['$resource'];
+	AppController.$inject = ['$resource'];
 
-	function ConversationsController($resource) {
+	function AppController($resource) {
 		/**
 		 * Resources
 		 */

@@ -1,21 +1,21 @@
 @extends('layouts.app')
 
 @section('content')
-<div ng-controller="ConversationsController as ctrl" ng-init="ctrl.index()">
+<div ng-controller="AppController as app" ng-init="app.index()">
 
     <div class="container">
         <div class="row">
             <div class="col-md-4">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Conversations (@{{ ctrl.conversations.length }})</div>
+                    <div class="panel-heading">Conversations (@{{ app.conversations.length }})</div>
                     <div class="list-group">
-                      <a ng-repeat="conversation in ctrl.conversations" ng-click="ctrl.getMessages(conversation)" href="#" class="list-group-item" ng-class="{'active': ctrl.conversation.id == conversation.id}">
+                      <a ng-repeat="conversation in app.conversations" ng-click="app.getMessages(conversation)" href="#" class="list-group-item" ng-class="{'active': app.conversation.id == conversation.id}">
                         <h4 class="list-group-item-heading">
                             {{-- Display with whom the conversation with. --}}
-                            <span ng-if="ctrl.me.id == conversation.initiator.id">
+                            <span ng-if="app.me.id == conversation.initiator.id">
                                 @{{ conversation.respondent.name }}
                             </span>
-                            <span ng-if="ctrl.me.id != conversation.initiator.id">
+                            <span ng-if="app.me.id != conversation.initiator.id">
                                 @{{ conversation.initiator.name }}
                             </span>
                         </h4>
@@ -26,9 +26,9 @@
             </div>
             <div class="col-md-8">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Messages (@{{ ctrl.messages.length }})</div>
+                    <div class="panel-heading">Messages (@{{ app.messages.length }})</div>
                     <div class="panel-body">
-                        <div ng-repeat="message in ctrl.messages track by $index" class="media">
+                        <div ng-repeat="message in app.messages track by $index" class="media">
                             <div class="media-left">
                                 <a href="#">
                                     <img class="media-object img-circle" src="https://placehold.it/32x32">
@@ -44,7 +44,7 @@
                         </div>
                     </div>
                     <div class="panel-footer">
-                        <form ng-submit="ctrl.sendMessage(message)">
+                        <form ng-submit="app.sendMessage(message)">
                             <div class="input-group">
                                     <input ng-model="message" type="text" class="form-control" placeholder="Type message..." autofocus="">
                                     <span class="input-group-btn">
