@@ -97,7 +97,7 @@
                     Laravel AngularJS Chat
                 </div>
                 <p>
-                    A sample chat app written in Laravel and AngularJS and by <a href="http://doncadavona.com" class="link-unstyled" target="_blank">Don Cadavona</a>.
+                    A sample chat app on Laravel and AngularJS by <a href="http://doncadavona.com" class="link-unstyled" target="_blank">Don Cadavona</a>.
                 </p>
                 <br>
                 <div class="links">
