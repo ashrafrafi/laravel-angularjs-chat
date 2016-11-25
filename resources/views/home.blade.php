@@ -3,7 +3,7 @@
 @section('content')
 <div ng-controller="AppController as app" ng-init="app.index()">
 
-    <div class="container">
+    <div class="container-fluid">
         <div class="row">
             <div class="col-md-4">
                 <div class="panel panel-default">
@@ -25,9 +25,9 @@
                 </div>
             </div>
             <div class="col-md-8">
-                <div class="panel panel-default">
+                <div class="panel panel-default full-height">
                     <div class="panel-heading">Messages (@{{ app.messages.length }})</div>
-                    <div class="panel-body">
+                    <div class="panel-body scrollable max-height">
                         <div ng-repeat="message in app.messages track by $index" class="media">
                             <div class="media-left">
                                 <a href="#">
@@ -58,4 +58,5 @@
         </div>
     </div>
 </div>
+
 @endsection

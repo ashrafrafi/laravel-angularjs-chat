@@ -7,3 +7,21 @@
 
 // Bootstrap
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+
+.full-height {
+    /**
+	 * Maximize message panel size to fit screen minus other panels on screen such as the navbar and their paddings.
+	 */
+    height: calc(100vh - 92px);
+}
+
+.max-height {
+	/**
+	 * Maximize message panel size to fit screen minus other panels on screen such as the navbar and their paddings.
+	 */
+    height: calc(100vh - 194px);
+}
+
+.scrollable {
+    overflow-y: scroll;
+}
