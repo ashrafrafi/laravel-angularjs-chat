@@ -32,7 +32,7 @@
 		 * View Model
 		 */
 		var vm = this;
-		vm.message = 'hello world!';
+		vm.message = null;
 		
 		vm.users = null;
 		vm.user = null;
@@ -106,26 +106,31 @@
 			);
 		}
 
-		vm.sendMessage = function(text){
-			
-			console.log('Sending message...');
+		vm.sendMessage = function(form){
+			if(form.$valid){
+				console.log('Sending message...');
 
-			Message.save(
-				{
-					conversation_id: vm.conversation.id,
-					text: text
-				},
-				function(response){
-					vm.messages.push(response);
+				Message.save(
+					{
+						conversation_id: vm.conversation.id,
+						text: vm.message
+					},
+					function(response){
+						vm.messages.push(response);
+						vm.message = null
 
-					console.log('Message sent:');
-					console.log(response);
-					console.log(vm.messages);
-				},
-				function(error){
-					console.log(error);
-				}
-			);
+						console.log('Message sent:');
+						console.log(response);
+						console.log(vm.messages);
+					},
+					function(error){
+						console.log(error);
+					}
+				);
+			}
+			else{
+				console.log('Nothing to send...');
+			}
 		}
 	} // AppController
 

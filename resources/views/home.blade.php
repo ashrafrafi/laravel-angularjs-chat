@@ -29,26 +29,35 @@
                     <div class="panel-heading">Messages (@{{ app.messages.length }})</div>
                     <div class="panel-body scrollable max-height" scroll-glue>
                         <div ng-repeat="message in app.messages track by $index" class="media">
-                            <div class="media-left">
+                            <div ng-if="app.me.id != message.sender.id" class="media-left">
                                 <a href="#">
                                     <img class="media-object img-circle" src="https://placehold.it/32x32" alt="@{{ message.sender.name }}">
                                 </a>
                             </div>
                             <div class="media-body">
-                                <p>
+                                <p ng-class="{
+                                    'text-primary': app.me.id != message.sender.id,
+                                    'text-right':   app.me.id == message.sender.id,
+                                }">
                                     @{{ message.text }}
                                     <br>
-                                    <small>@{{ message.sender.name }} - @{{ message.created_at }}</small>
+                                    <small ng-if="app.me.id != message.sender.id">@{{ message.sender.name }} - @{{ message.created_at }}</small>
+                                    <small ng-if="app.me.id == message.sender.id">Me - @{{ message.created_at }}</small>
                                 </p>
+                            </div>
+                            <div ng-if="app.me.id == message.sender.id" class="media-right">
+                                <a href="#">
+                                    <img class="media-object img-circle" src="https://placehold.it/32x32" alt="@{{ message.sender.name }}">
+                                </a>
                             </div>
                         </div>
                     </div>
                     <div class="panel-footer">
-                        <form ng-submit="app.sendMessage(message)">
+                        <form name="messageForm" ng-submit="app.sendMessage(messageForm)">
                             <div class="input-group">
-                                    <input ng-model="message" type="text" class="form-control" placeholder="Type message..." autofocus="">
+                                    <input ng-model="app.message" type="text" class="form-control" placeholder="Type message..." autofocus="" required>
                                     <span class="input-group-btn">
-                                        <button class="btn btn-default" type="button">Send</button>
+                                        <button class="btn btn-default" type="button" ng-disabled="messageForm.$invalid">Send</button>
                                     </span>
                             </div>
                         </form>
