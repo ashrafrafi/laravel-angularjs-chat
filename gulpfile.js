@@ -19,7 +19,6 @@ elixir((mix) => {
         '../../../node_modules/angular/angular.js',
         '../../../node_modules/angular-resource/angular-resource.js',
         'app.js',
-        'ConversationsController.js'
     ]);
 
     // version assets for cache busting
