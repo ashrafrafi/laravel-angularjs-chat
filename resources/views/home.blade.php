@@ -27,7 +27,7 @@
             <div class="col-md-8">
                 <div class="panel panel-default full-height">
                     <div class="panel-heading">Messages (@{{ app.messages.length }})</div>
-                    <div class="panel-body scrollable max-height">
+                    <div class="panel-body scrollable max-height" scroll-glue>
                         <div ng-repeat="message in app.messages track by $index" class="media">
                             <div class="media-left">
                                 <a href="#">

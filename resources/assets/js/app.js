@@ -6,7 +6,7 @@
 	'use strict';
 
 	angular
-		.module('app', ['ngResource'])
+		.module('app', ['ngResource', 'luegg.directives'])
 		.controller('AppController', AppController);
 
 	AppController.$inject = ['$resource'];
