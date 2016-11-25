@@ -31,7 +31,7 @@
                         <div ng-repeat="message in app.messages track by $index" class="media">
                             <div class="media-left">
                                 <a href="#">
-                                    <img class="media-object img-circle" src="https://placehold.it/32x32">
+                                    <img class="media-object img-circle" src="https://placehold.it/32x32" alt="@{{ message.sender.name }}">
                                 </a>
                             </div>
                             <div class="media-body">
