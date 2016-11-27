@@ -9,9 +9,9 @@
 		.module('app', ['ngResource', 'luegg.directives'])
 		.controller('AppController', AppController);
 
-	AppController.$inject = ['$resource'];
+	AppController.$inject = ['$resource', '$interval'];
 
-	function AppController($resource) {
+	function AppController($resource, $interval) {
 		/**
 		 * Resources
 		 */
@@ -42,10 +42,17 @@
 		vm.conversation = null;
 		vm.messages = null;
 
+		/**
+		 * Hold intervals
+		 */
+		var messagesPoller = null;
+
 		vm.index = function(){
 			vm.getConversations();
 
 			vm.getMe();
+
+			pollMessages();
 		}
 
 		vm.getMe = function(){
@@ -131,6 +138,32 @@
 			else{
 				console.log('Nothing to send...');
 			}
+		}
+
+		function pollMessages(){
+
+			console.log("pollMessages() called...")
+
+			// Poll interval rate in milliseconds
+			var pollInterval = 1500;
+
+			// Maximum poll interval
+			var pollCount = 45;
+
+			messagesPoller = $interval(function(){
+				console.log('Polling messages...');
+
+				Message.query(
+				{ conversation_id: vm.conversation.id },
+				function(response){
+					console.log(response);
+					vm.messages = response;
+				},
+				function(error){
+					console.log(error);
+				}
+			);
+			}, pollInterval, pollCount);
 		}
 	} // AppController
 
