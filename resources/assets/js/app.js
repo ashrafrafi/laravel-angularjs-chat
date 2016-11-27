@@ -43,7 +43,7 @@
 		vm.messages = null;
 
 		/**
-		 * Hold intervals
+		 * Hold poll intervals
 		 */
 		var messagesPoller = null;
 
@@ -53,9 +53,6 @@
 
 			// Get user's conversations with people.
 			vm.getConversations();
-
-			// Start polling user's current conversation messages.
-			pollMessages();
 		}
 
 		/**
@@ -97,6 +94,12 @@
 
 					// get messages of the conversation
 					vm.getMessages(vm.conversation);
+
+					// Start polling user's current conversation messages.
+					// pollMessages();
+					
+					// // Start long-polling user's current conversation messages.
+					longPollMessages();
 				},
 				function(error){
 					console.log(error)
@@ -183,6 +186,33 @@
 				}
 			);
 			}, pollInterval, pollCount);
+		}
+
+		/**
+		 * Long-poll conversation messages.
+		 * @param  {timestamp} lastMessageTimestamp The timestamp of the last message.
+		 */
+		function longPollMessages(lastMessageTimestamp = null){
+
+			console.log('Long polling messages...');
+
+			Message.query({
+					conversation_id: vm.conversation.id,
+					timestamp: lastMessageTimestamp
+				},
+				function(response){
+					console.log(response);
+					vm.messages = response;
+
+					// Set new timestamp from the last message.
+					var lastMessageTimestamp = response[response.length - 1].created_at;
+
+					longPollMessages(lastMessageTimestamp);
+				},
+				function(error){
+					console.log(error);
+				}
+			);
 		}
 		
 	} // End of AppController
