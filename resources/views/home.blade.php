@@ -5,7 +5,7 @@
 
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-xs-3">
                 <div class="panel panel-default">
                     <div class="panel-heading">Conversations (@{{ app.conversations.length }})</div>
                     <div class="list-group">
@@ -24,7 +24,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-8">
+            <div class="col-xs-9">
                 <div class="panel panel-default full-height">
                     <div class="panel-heading">Messages (@{{ app.messages.length }})</div>
                     <div class="panel-body scrollable max-height" scroll-glue>
