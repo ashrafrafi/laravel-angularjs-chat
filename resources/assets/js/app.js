@@ -48,13 +48,20 @@
 		var messagesPoller = null;
 
 		vm.index = function(){
-			vm.getConversations();
-
+			// Get the current user.
 			vm.getMe();
 
+			// Get user's conversations with people.
+			vm.getConversations();
+
+			// Start polling user's current conversation messages.
 			pollMessages();
 		}
 
+		/**
+		 * Get the current user.
+		 * @return {[type]} [description]
+		 */
 		vm.getMe = function(){
 			User.me(
 				{},
@@ -70,6 +77,9 @@
 			);
 		}
 
+		/**
+		 * Get conversations with people.
+		 */
 		vm.getConversations = function(){
 			console.log('Getting conversations...');
 
@@ -94,6 +104,9 @@
 			);
 		}
 
+		/**
+		 * Get conversation messages.
+		 */
 		vm.getMessages = function(conversation){
 			
 			console.log('Getting conversation messages: ' + conversation);
@@ -113,6 +126,9 @@
 			);
 		}
 
+		/**
+		 * Send message to conversation.
+		 */
 		vm.sendMessage = function(form){
 			if(form.$valid){
 				console.log('Sending message...');
@@ -140,6 +156,9 @@
 			}
 		}
 
+		/**
+		 * Poll conversation messages.
+		 */
 		function pollMessages(){
 
 			console.log("pollMessages() called...")
@@ -165,6 +184,7 @@
 			);
 			}, pollInterval, pollCount);
 		}
-	} // AppController
+		
+	} // End of AppController
 
 })();
