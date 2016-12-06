@@ -32,6 +32,7 @@ class MessagesController extends Controller
              * 
              * Simply return the messages immidiately.
              */
+
             return response()->json($messages);
 
         } else {
@@ -41,66 +42,9 @@ class MessagesController extends Controller
              * To determine if there are any new messages on the conversation,
              * keep matching the request timestamp to the timestamp of the last message from the conversation until it is older.
              * Then send back the updated messages.
-             */
-            
-            $messages = $conversation->messages()->with('sender')->get()->sortBy('created_at')->values()->all();
-
-            // Track poll start
-            // $started_at = Carbon::now();
-
-            // echo '<br>Last message: '.$request->get('timestamp');
-            // echo '<br>Started at: '.$started_at;
-            // echo '<br>Now: '.Carbon::now();
-            // echo '<br>Now + 10 seconds: '.Carbon::now()->addSeconds(10);
-            // echo '<br>started_at + 10 seconds: '.$started_at->addSeconds(10);
-
-            // echo '<br>Test 1: ';
-            // echo $started_at < Carbon::now()->addSeconds(10);
-
-            // // Check date of last message.
-            // $last_message = $conversation->messages()->with('sender')->get()->sortByDesc('created_at')->first();
-
-            // echo '<br>Test 2: ';
-            // echo $last_message->created_at > $request->get('timestamp');
-
-            // if($last_message->created_at > $request->get('timestamp')){
-            //     echo '<br>New message at: '.$last_message->created_at;
-            // }
-            // else{
-            //     echo '<br>Old message at: '.$last_message->created_at;
-            // }
-
-            // echo '<br>Slept at: '.Carbon::now();
-            // sleep(1);
-            // echo '<br>Waked at: '.Carbon::now();
-            
-            // echo '<br>Slept at: '.Carbon::now();
-
-            // $i = 1;
-            // while(true){
-                
-            //     if($i <= 3){
-            //         echo '<br>i = '.$i;
-                    
-            //         sleep(1);
-
-            //         $i++;
-            //     } else {
-            //         break;
-            //     }
-            // }
-
-            // echo '<br>Waked at: '.Carbon::now();
-
-            // echo '<br>Slept at: '.Carbon::now();
-            // while($started_at->addSeconds(5) > Carbon::now()){
-            //     sleep(1);
-            // }
-            // echo '<br>Waked at: '.Carbon::now();
-
-            /**
+             *
              * Poll messages until there is a new one.
-             * For safety, let's limit polling up to a certain minute.
+             * For stability, let's limit polling up to a certain minute.
              */
 
             // Poll interval in seconds
