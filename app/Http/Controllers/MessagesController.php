@@ -19,30 +19,40 @@ class MessagesController extends Controller
     {
         $conversation = Conversation::find($conversation_id);
 
+        $messages = $conversation->messages()->with('sender')->get()->sortBy('created_at')->values()->all();
+
         /**
          * Determine if client requests to poll or long-poll messages based on timestamp.
          * If the request has a timestamp, do a long-poll, else do regular polling.
          */
         if(!$request->has('timestamp')){
-            // Regular polling. Simply return the requested resources.
-            return $conversation->messages()->with('sender')->get()->sortBy('created_at');
-        }
-        else{
+            
+            /**
+             * Regular polling.
+             * 
+             * Simply return the messages immidiately.
+             */
+            return response()->json($messages);
+
+        } else {
             /**
              * Long polling. More complicated. We do the following:
+             * 
              * To determine if there are any new messages on the conversation,
              * keep matching the request timestamp to the timestamp of the last message from the conversation until it is older.
              * Then send back the updated messages.
              */
             
-            $messages = $conversation->messages()->with('sender')->get()->sortBy('created_at');
+            $messages = $conversation->messages()->with('sender')->get()->sortBy('created_at')->values()->all();
 
-            $started_at = Carbon::now();
+            // Track poll start
+            // $started_at = Carbon::now();
 
             // echo '<br>Last message: '.$request->get('timestamp');
             // echo '<br>Started at: '.$started_at;
             // echo '<br>Now: '.Carbon::now();
             // echo '<br>Now + 10 seconds: '.Carbon::now()->addSeconds(10);
+            // echo '<br>started_at + 10 seconds: '.$started_at->addSeconds(10);
 
             // echo '<br>Test 1: ';
             // echo $started_at < Carbon::now()->addSeconds(10);
@@ -53,11 +63,6 @@ class MessagesController extends Controller
             // echo '<br>Test 2: ';
             // echo $last_message->created_at > $request->get('timestamp');
 
-            // echo '<br>Test 3: ';
-            // echo $started_at->addSeconds(3) > Carbon::now();
-
-            // echo '<br>Started at + 10 seconds: '.$started_at->addSeconds(10);
-
             // if($last_message->created_at > $request->get('timestamp')){
             //     echo '<br>New message at: '.$last_message->created_at;
             // }
@@ -65,29 +70,70 @@ class MessagesController extends Controller
             //     echo '<br>Old message at: '.$last_message->created_at;
             // }
 
+            // echo '<br>Slept at: '.Carbon::now();
+            // sleep(1);
+            // echo '<br>Waked at: '.Carbon::now();
+            
+            // echo '<br>Slept at: '.Carbon::now();
+
+            // $i = 1;
+            // while(true){
+                
+            //     if($i <= 3){
+            //         echo '<br>i = '.$i;
+                    
+            //         sleep(1);
+
+            //         $i++;
+            //     } else {
+            //         break;
+            //     }
+            // }
+
+            // echo '<br>Waked at: '.Carbon::now();
+
+            // echo '<br>Slept at: '.Carbon::now();
+            // while($started_at->addSeconds(5) > Carbon::now()){
+            //     sleep(1);
+            // }
+            // echo '<br>Waked at: '.Carbon::now();
+
             /**
-             * We can poll messages forever or until theres a new one.
-             * But we'll limit it to certain minute.
+             * Poll messages until there is a new one.
+             * For safety, let's limit polling up to a certain minute.
              */
 
-            while(true){
-                // Check date of last message.
+            // Poll interval in seconds
+            $poll_interval = 1;
+
+            // Poll count
+            $poll_count = 30;
+
+            $i = 0;
+
+            while($i <= $poll_interval) {
+                
+                // Check the date of the last message.
                 $last_message = $conversation->messages()->with('sender')->get()->sortByDesc('created_at')->first();
 
+                // Check for any new messages
                 if($last_message->created_at > $request->get('timestamp')){
-                    // Detected a new message. Return updated messages.
 
-                    $messages = $conversation->messages()->with('sender')->get()->sortBy('created_at');
+                    // get updated messages
+                    $messages = $conversation->messages()->with('sender')->get()->sortBy('created_at')->values()->all();
+                    
+                    // exit the loop
                     break;
+
+                } else {
+                    // Wait for a few seconds then poll for new messages again. Ugly yes, as it blocks other PHP processes, but should do for now.
+                    sleep($poll_interval);
                 }
-                else{
-                    // Wait for a few seconds then poll the database again. Ugly as it blocks other PHP processes, but should do for now.
-                    sleep(1);
-                    continue;
-                }
+
+                $i++;
             }
 
-            return $messages;
+            return response()->json($messages);
         }
     }
 

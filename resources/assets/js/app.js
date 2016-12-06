@@ -98,7 +98,7 @@
 					// Start polling user's current conversation messages.
 					// pollMessages();
 					
-					// // Start long-polling user's current conversation messages.
+					// Start long-polling user's current conversation messages.
 					longPollMessages();
 				},
 				function(error){
@@ -194,7 +194,7 @@
 		 */
 		function longPollMessages(lastMessageTimestamp = null){
 
-			console.log('Long polling messages...');
+			console.log('Long polling messages... ' + lastMessageTimestamp);
 
 			Message.query({
 					conversation_id: vm.conversation.id,
@@ -206,6 +206,9 @@
 
 					// Set new timestamp from the last message.
 					var lastMessageTimestamp = response[response.length - 1].created_at;
+
+					console.log('lastMessageTimestamp');
+					console.log(lastMessageTimestamp);
 
 					longPollMessages(lastMessageTimestamp);
 				},
