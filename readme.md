@@ -26,17 +26,29 @@ To know more, please read about `'push technology in computing'` online.
 
 ## Setup
 Open Terminal or Command Prompt and run the following commands:
+
 * Clone this app:
+
 `git clone git@github.com:doncadavona/laravel-angularjs-chat.git`
+
 `cd laravel-angularjs-chat`
+
 * Install dependencies:
+
 `npm install`
+
 * Compile assets:
+
 `gulp`
+
 * Migrate and seed database:
+
 `php artisan db:migrate`
+
 `php artisan db:seed`
+
 * Serve
+
 `php artisan serve`
 
 ## Usage
