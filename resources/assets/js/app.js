@@ -12,6 +12,7 @@
 	AppController.$inject = ['$resource', '$interval'];
 
 	function AppController($resource, $interval) {
+		
 		/**
 		 * Resources
 		 */
@@ -41,6 +42,9 @@
 		vm.conversations = null;
 		vm.conversation = null;
 		vm.messages = null;
+
+		vm.methods = ['Polling', 'Long Polling'];
+		vm.method = 'Polling';
 
 		/**
 		 * Hold poll intervals
@@ -95,11 +99,20 @@
 					// get messages of the conversation
 					vm.getMessages(vm.conversation);
 
-					// Start polling user's current conversation messages.
-					// pollMessages();
+					// Start getting the conversation messages.
 					
-					// Start long-polling user's current conversation messages.
-					longPollMessages();
+					switch(vm.method.toLowerCase()){
+						case 'polling':
+							pollMessages();
+							break;
+						case 'long polling':
+							longPollMessages();
+							break;
+						default:
+							pollMessages();
+							break;
+					}
+
 				},
 				function(error){
 					console.log(error)
@@ -111,7 +124,7 @@
 		 * Get conversation messages.
 		 */
 		vm.getMessages = function(conversation){
-			
+
 			console.log('Getting conversation messages: ' + conversation);
 
 			vm.conversation = conversation;
@@ -167,7 +180,7 @@
 			console.log("pollMessages() called...")
 
 			// Poll interval rate in milliseconds
-			var pollInterval = 1500;
+			var pollInterval = 2000;
 
 			// Maximum poll interval
 			var pollCount = 45;
@@ -176,15 +189,15 @@
 				console.log('Polling messages...');
 
 				Message.query(
-				{ conversation_id: vm.conversation.id },
-				function(response){
-					console.log(response);
-					vm.messages = response;
-				},
-				function(error){
-					console.log(error);
-				}
-			);
+					{ conversation_id: vm.conversation.id },
+					function(response){
+						console.log(response);
+						vm.messages = response;
+					},
+					function(error){
+						console.log(error);
+					}
+				);
 			}, pollInterval, pollCount);
 		}
 
@@ -207,15 +220,45 @@
 					// Set new timestamp from the last message.
 					var lastMessageTimestamp = response[response.length - 1].created_at;
 
-					console.log('lastMessageTimestamp');
+					console.log('lastMessageTimestamp:');
 					console.log(lastMessageTimestamp);
 
-					longPollMessages(lastMessageTimestamp);
+					if(vm.method.toLowerCase() == 'long polling')
+						longPollMessages(lastMessageTimestamp);
 				},
 				function(error){
 					console.log(error);
 				}
 			);
+		}
+
+		/**
+		 * Update settings.
+		 */
+		vm.updateSettings = function(){
+
+			console.log('Updating settings...');
+
+			console.log(messagesPoller);
+
+			// cancel any running poll.
+			if(messagesPoller != null)
+				if($interval.cancel(messagesPoller))
+					console.log('Polling stopped...');
+
+			// Get messages and use selected method.
+			switch(vm.method.toLowerCase()){
+				case 'polling':
+					pollMessages();
+					break;
+				case 'long polling':
+					longPollMessages();
+					break;
+				default:
+					pollMessages();
+					break;
+			}
+
 		}
 		
 	} // End of AppController

@@ -23,10 +23,27 @@
                       </a>
                     </div>
                 </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-xs-6">
+                                Settings
+                            </div>
+                            <div class="col-xs-6 text-right">
+                                <button class="btn btn-default btn-sm" ng-click="app.updateSettings()">Update</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        Method: <select ng-model="app.method" ng-options="method as method for method in app.methods" class="form-control"></select>
+                    </div>
+                </div>
             </div>
             <div class="col-xs-9">
                 <div class="panel panel-default full-height">
-                    <div class="panel-heading">Messages (@{{ app.messages.length }})</div>
+                    <div class="panel-heading">
+                        Messages (@{{ app.messages.length }})
+                    </div>
                     <div class="panel-body scrollable max-height" scroll-glue>
                         <div ng-repeat="message in app.messages track by $index" class="media">
                             <div ng-if="app.me.id != message.sender.id" class="media-left">

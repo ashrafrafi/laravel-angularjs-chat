@@ -36,6 +36,7 @@ class MessagesController extends Controller
             return response()->json($messages);
 
         } else {
+            
             /**
              * Long polling. More complicated. We do the following:
              * 
