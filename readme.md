@@ -10,7 +10,7 @@ Because when you create real-time web applications, such as instant messaging an
 This app serves as example using the 3 techniques to help you get started and decide your best approach on creating wonderful real-time web apps!
 
 ### Polling
-Regular polling is a technique that implements the regular checking of data from the server. In any messaging app, the faster the rate at which data is checked, the more real-time the chat app feels. But the more bandwidth and unneccessary network requests are wasted. Because there is no way the app will know when there is a new chat messages, the app has to constantly ask the server itself. Although it is very effective and stable, it is not efficient.
+Regular polling is a technique that implements the regular checking of data from the server. In any messaging app, the faster the rate at which data is checked, the more real-time the chat app feels, but the more bandwidth and unneccessary network requests are wasted. Although it is very effective and stable, it is not efficient.
 
 To know more, please read about `'polling in computing'` online.
 
