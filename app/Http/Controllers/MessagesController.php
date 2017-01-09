@@ -52,7 +52,7 @@ class MessagesController extends Controller
             $poll_interval = 1;
 
             // Poll count
-            $poll_count = 30;
+            $poll_count = 5;
 
             $i = 0;
 
@@ -71,7 +71,12 @@ class MessagesController extends Controller
                     break;
 
                 } else {
-                    // Wait for a few seconds then poll for new messages again. Ugly yes, as it blocks other PHP processes, but should do for now.
+                    // Close the session to prevent php from blocking other requests.
+                    // NOT WORKING! See: http://stackoverflow.com/questions/41544698/how-to-session-write-close-in-laravel
+                    session_write_close();
+
+                    // Wait for n seconds then poll for new messages again. Ugly yes, as it blocks other PHP processes, but should do for now.
+                    // Got a better way? Please make a Pull Request at: https://github.com/doncadavona/laravel-angularjs-chat/pulls
                     sleep($poll_interval);
                 }
 
