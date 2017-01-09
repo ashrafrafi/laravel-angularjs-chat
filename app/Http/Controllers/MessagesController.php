@@ -56,7 +56,7 @@ class MessagesController extends Controller
 
             $i = 0;
 
-            while($i <= $poll_interval) {
+            while($i <= $poll_count) {
                 
                 // Check the date of the last message.
                 $last_message = $conversation->messages()->with('sender')->get()->sortByDesc('created_at')->first();
