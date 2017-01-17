@@ -36,25 +36,27 @@ Open Terminal or Command Prompt and run the following commands:
 
 * Cnone/download then open the app:
 
-	`git clone git@github.com:doncadavona/laravel-angularjs-chat.git`
+	$ `git clone git@github.com:doncadavona/laravel-angularjs-chat.git`
 
-	`cd laravel-angularjs-chat`
+	$ `cd laravel-angularjs-chat`
 
 * Install dependencies:
 
-	`npm install`
+	$ `composer install`
+
+	$ `npm install`
 
 * Compile assets:
 
-	`gulp`
+	$ `gulp`
 
 * Setup database:
 
-	`php artisan db:migrate --seed`
+	$ `php artisan db:migrate --seed`
 
 * Serve and enjoy
 
-	`php artisan serve`
+	$ `php artisan serve`
 
 ## Usage
 
