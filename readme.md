@@ -34,7 +34,7 @@ To know more, please read about `'push technology in computing'` online.
 
 Open Terminal or Command Prompt and run the following commands:
 
-* Cnone/download then open the app:
+* Clone/download then open the app:
 
 	$ `git clone git@github.com:doncadavona/laravel-angularjs-chat.git`
 
